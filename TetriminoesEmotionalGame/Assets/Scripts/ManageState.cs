@@ -4,31 +4,12 @@ using UnityEngine;
 
 public class ManageState : MonoBehaviour
 {
-    public enum State
-    {
-        start = 0,
-        end = 1,
-        personEnter = 2,
-        personLeave = 3,
-        sitting = 4,
-        talking = 5
-    };
-    public enum Symbols
-    {
-        square = 0,
-        circle = 1,
-        triangle = 2,
-        x = 3,
-        squareX = 4,
-        squareTri = 5,
-        squareCirc = 6,
-        circleX = 7,
-        circleTri = 8,
-        triangleX = 9
-
-    };
+    
     public GameObject camera;
     private State game;
+    private bool onSwitch;
+    private Vector3 camOut;
+    private Vector3 camIn;
 
     // Start is called before the first frame update
     void Start()
