@@ -12,107 +12,22 @@
                 {
                     "input": 5,
                     "output": 4,
-                    "affect":0
+                    "affect": 0
                 },
                 {
                     "input": 10,
                     "output": 4,
-                    "affect":0
+                    "affect": 0
                 },
                 {
                     "input": 15,
                     "output": 4,
-                    "affect":0
+                    "affect": 0
                 }
             ],
-            "standard":[6,8,12],
-            "opening":[3],
-            "timeOut":300
-        },
-         {
-            "name":"",
-            "affection": 0,
-            "spriteSheet":["Images/example"],
-            "leaves": false,
-            "waits": true,
-            "isActive": false,
-            "proximity": 50,
-            "cases":[
-                {
-
-                }
-            ],
-            "standard":[],
-            "opening":[],
-            "timeOut":300
-        },
-         {
-            "name":"",
-            "affection": 0,
-            "spriteSheet":["Images/example"],
-            "leaves": false,
-            "waits": true,
-            "isActive": false,
-            "proximity": 50,
-            "cases":[
-                {
-
-                }
-            ],
-            "standard":[],
-            "opening":[],
-            "timeOut":300
-        },
-         {
-            "name":"",
-            "affection": 0,
-            "spriteSheet":["Images/example"],
-            "leaves": false,
-            "waits": true,
-            "isActive": false,
-            "proximity": 50,
-            "cases":[
-                {
-
-                }
-            ],
-            "standard":[],
-            "opening":[],
-            "timeOut":300
-        },
-         {
-            "name":"",
-            "affection": 0,
-            "spriteSheet":["Images/example"],
-            "leaves": false,
-            "waits": true,
-            "isActive": false,
-            "proximity": 50,
-            "cases":[
-                {
-
-                }
-            ],
-            "standard":[],
-            "opening":[],
-            "timeOut":300
-        },
-         {
-            "name":"",
-            "affection": 0,
-            "spriteSheet":["Images/example"],
-            "leaves": false,
-            "waits": true,
-            "isActive": false,
-            "proximity": 50,
-            "cases":[
-                {
-
-                }
-            ],
-            "standard":[],
-            "opening":[],
-            "timeOut":300
+            "standard": [6,8,12],
+            "opening": [3],
+            "timeOut": 300
         },
         {
             "name":"",
@@ -127,9 +42,94 @@
 
                 }
             ],
-            "standard":[],
-            "opening":[],
-            "timeOut":300
+            "standard": [],
+            "opening": [],
+            "timeOut": 300
+        },
+        {
+            "name":"",
+            "affection": 0,
+            "spriteSheet":["Images/example"],
+            "leaves": false,
+            "waits": true,
+            "isActive": false,
+            "proximity": 50,
+            "cases":[
+                {
+
+                }
+            ],
+            "standard": [],
+            "opening": [],
+            "timeOut": 300
+        },
+        {
+            "name":"",
+            "affection": 0,
+            "spriteSheet":["Images/example"],
+            "leaves": false,
+            "waits": true,
+            "isActive": false,
+            "proximity": 50,
+            "cases":[
+                {
+
+                }
+            ],
+            "standard": [],
+            "opening": [],
+            "timeOut": 300
+        },
+        {
+            "name":"",
+            "affection": 0,
+            "spriteSheet":["Images/example"],
+            "leaves": false,
+            "waits": true,
+            "isActive": false,
+            "proximity": 50,
+            "cases":[
+                {
+
+                }
+            ],
+            "standard": [],
+            "opening": [],
+            "timeOut": 300
+        },
+        {
+            "name":"",
+            "affection": 0,
+            "spriteSheet":["Images/example"],
+            "leaves": false,
+            "waits": true,
+            "isActive": false,
+            "proximity": 50,
+            "cases":[
+                {
+
+                }
+            ],
+            "standard": [],
+            "opening": [],
+            "timeOut": 300
+        },
+        {
+            "name":"",
+            "affection": 0,
+            "spriteSheet":["Images/example"],
+            "leaves": false,
+            "waits": true,
+            "isActive": false,
+            "proximity": 50,
+            "cases":[
+                {
+
+                }
+            ],
+            "standard": [],
+            "opening": [],
+            "timeOut": 300
         }
     ]
 }
