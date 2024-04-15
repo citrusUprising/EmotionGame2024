@@ -29,8 +29,8 @@ public class PersonHandler : MonoBehaviour
     private int genAffectMod = 10;
     private int openSpot = 0;
     private int openingLength;
-    private float convoDelay = 0;
-    private int delayMax = 3;
+    public float convoDelay = 0;
+    public int delayMax = 3;
     private float trainTime = 0;
 
     private int closestProximity;
@@ -76,6 +76,10 @@ public class PersonHandler : MonoBehaviour
         character.isActive = true;
     }
 
+    public void annoy(){
+        character.affection -= genAffectMod*2;
+    }
+
     public void respond(Symbols input){
         Symbols temp = (Symbols)3; //FLAG  remember to change when enum pushes go through
         if (character.leaves){
@@ -83,9 +87,6 @@ public class PersonHandler : MonoBehaviour
         }
         if (!character.isActive){
             return;
-        }
-        if (convoDelay < delayMax){
-            character.affection -= genAffectMod*2;
         }
         convoDelay = 0;
         if (trainTime >= character.timeOut){
