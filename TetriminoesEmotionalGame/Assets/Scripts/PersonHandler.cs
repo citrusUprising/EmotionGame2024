@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class specialCases{
+[System.Serializable]
+public class specialCases{
     public Symbols input;
     public Symbols output;
     public int affect;
 }
 
-public abstract class person{
+[System.Serializable]
+public class Person{
     public string name;
     public int affection; // caps at -1 and 100
     public Image[] spriteSheet;
@@ -23,9 +25,19 @@ public abstract class person{
     public int timeOut;
 }
 
+[System.Serializable]
+public class AllPeople{
+    public Person[] people;
+}
+
 public class PersonHandler : MonoBehaviour
 {
-    private person character;
+    //Json
+    [SerializeField] private TextAsset manifestJson; //assigned in inspector
+    [SerializeField] private AllPeople manifestData;
+    private Person character;
+
+    //minutae
     private int genAffectMod = 10;
     private int openSpot = 0;
     private int openingLength;
@@ -37,6 +49,7 @@ public class PersonHandler : MonoBehaviour
 
 
     void Awake(){
+        character = new Person();
         character.affection = 0;
         character.leaves = true;
         character.waits = true;
@@ -46,7 +59,10 @@ public class PersonHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //manifestData = new AllPeople();// for testing purposes
+        Debug.Log ("Importing JSON");
+        manifestData = JsonUtility.FromJson<AllPeople>(manifestJson.text);
+        Debug.Log ("JSON successfully read, first person is named "+manifestData.people[0].name);
     }
 
     // Update is called once per frame
@@ -68,9 +84,9 @@ public class PersonHandler : MonoBehaviour
     }
 
     public void importJSON(int i){
+        character = manifestData.people[i];
         openingLength = character.opening.Length;
         openSpot = 0;
-        //character == json[i];
     }
     public void enable(){
         character.isActive = true;
