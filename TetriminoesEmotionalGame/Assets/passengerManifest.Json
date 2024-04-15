@@ -1,22 +1,32 @@
 {
     "people":[
         {
-            "name":"test",
+            "name":"Creep",
             "affection": 0,
             "spriteSheet":["Images/example"],
             "leaves": false,
-            "waits": true,
+            "waits": false,
             "isActive": false,
             "proximity": 50,
             "cases":[
                 {
-                    "input": ,
-                    "output": ,
+                    "input": 5,
+                    "output": 4,
+                    "affect":0
+                },
+                {
+                    "input": 10,
+                    "output": 4,
+                    "affect":0
+                },
+                {
+                    "input": 15,
+                    "output": 4,
                     "affect":0
                 }
             ],
-            "standard":[],
-            "opening":[],
+            "standard":[6,8,12],
+            "opening":[3],
             "timeOut":300
         },
          {

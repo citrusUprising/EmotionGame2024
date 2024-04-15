@@ -72,7 +72,7 @@ public class PersonHandler : MonoBehaviour
         if (!character.leaves && convoDelay < delayMax){
             convoDelay += Time.deltaTime;
         }
-        if(character.name == "Stalker"&&character.proximity > closestProximity){
+        if(character.name == "Creep"&&character.proximity > closestProximity){
             character.proximity -= Time.deltaTime;
         }
         if (character.affection < 0){

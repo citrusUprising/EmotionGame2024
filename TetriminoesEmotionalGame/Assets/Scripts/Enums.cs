@@ -12,15 +12,16 @@ public enum State
     };
     public enum Symbols
     {
-        square = 0,
-        circle = 1,
-        triangle = 2,
-        x = 3,
-        squareX = 4,
-        squareTri = 5,
+        empty = 0,
+        square = 2,
+        circle = 3,
+        triangle = 4,
+        ex = 5,
         squareCirc = 6,
-        circleX = 7,
-        circleTri = 8,
-        triangleX = 9
+        squareTri = 8,
+        squareX = 10,
+        circleTri = 12,
+        circleX = 15,
+        triangleX = 20
 
     };
