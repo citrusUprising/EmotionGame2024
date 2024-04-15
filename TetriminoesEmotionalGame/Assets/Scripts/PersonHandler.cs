@@ -97,7 +97,7 @@ public class PersonHandler : MonoBehaviour
     }
 
     public void respond(Symbols input){
-        Symbols temp = (Symbols)5; //set to X
+        Symbols temp = Symbols.ex; 
 
         //character leaves if affection is too low
         if (character.affection < 0){
@@ -118,9 +118,9 @@ public class PersonHandler : MonoBehaviour
         //says goodbye if train hits destination
         if (trainTime >= character.timeOut){
             if(character.affection > 60){
-                //say Circle X
+                speak(Symbols.circleX);
             }else if (character.affection > 20){
-                //say X
+                speak(Symbols.ex);
             } else {
                 //  Say Nothing
             }
@@ -131,7 +131,7 @@ public class PersonHandler : MonoBehaviour
         //checks for special cases and responds
         for (int i = 0; i < character.cases.Length; i++){
             if (input == character.cases[i].input){
-                //say character.cases[i].output;
+                speak(character.cases[i].output);
                 character.affection += character.cases[i].affect;
                 return;
             }
@@ -139,7 +139,7 @@ public class PersonHandler : MonoBehaviour
 
         //recites opening text if applicable
         if(openSpot < openingLength){
-            //say opening[openSpot]
+            speak(character.opening[openSpot]); 
             openSpot++; 
         }
 
@@ -149,25 +149,29 @@ public class PersonHandler : MonoBehaviour
                 character.affection -= 100;
             } 
             if(character.affection > 60){
-                //say Circle X
+                speak(Symbols.circleX);
             }else if (character.affection > 20){
-                //say X
+                speak(Symbols.ex);
             } else {
                 //  Say Nothing
             }
             character.leaves = true;
         }
 
-        //waiting for player response
+        //waiting for player response, this is mostly for security's sake
         else if (input == (Symbols)0&&character.waits){
             //do nothing
         }
 
         //general response
         else {
-            //say standard [random];
+            speak(character.standard[Random.Range(0,character.standard.Length)]);
             character.affection += genAffectMod;
         }
 
+    }
+
+    private void speak (Symbols output){
+        //this handles character talking
     }
 }

@@ -69,6 +69,7 @@ public class ManageState : MonoBehaviour
                 if(onSwitch){
                     timer = 0;
                     onSwitch = false;
+                    savedSymbol = Symbols.empty;
                 }
                 timer += Time.deltaTime;
             break;
@@ -89,6 +90,7 @@ public class ManageState : MonoBehaviour
         responding = true;
         //delay
         character.GetComponent<PersonHandler>().respond(savedSymbol);
+        savedSymbol = Symbols.empty;
         responding = false;
     }
 }
