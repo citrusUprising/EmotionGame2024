@@ -14,6 +14,7 @@ public class ManageState : MonoBehaviour
     private Vector3 camIn;
     private float timer = 0;
     private Symbols savedSymbol = (Symbols)0;
+    private bool responding = false;
 
     // Start is called before the first frame update
     void Start()
@@ -59,8 +60,8 @@ public class ManageState : MonoBehaviour
                  if (character.GetComponent<PersonHandler>().convoDelay < character.GetComponent<PersonHandler>().delayMax){
                      character.GetComponent<PersonHandler>().annoy();
                  }
-                 else {
-                     character.GetComponent<PersonHandler>().respond(savedSymbol);
+                 if (!responding){
+                    responseDelay();
                  }
             break;
 
@@ -82,5 +83,12 @@ public class ManageState : MonoBehaviour
             default:
             break;
         }
+    }
+
+    private void responseDelay(){
+        responding = true;
+        //delay
+        character.GetComponent<PersonHandler>().respond(savedSymbol);
+        responding = false;
     }
 }

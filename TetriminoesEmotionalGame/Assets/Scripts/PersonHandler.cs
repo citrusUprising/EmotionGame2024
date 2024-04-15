@@ -38,11 +38,11 @@ public class PersonHandler : MonoBehaviour
     private Person character;
 
     //minutae
-    private int genAffectMod = 10;
+    private int genAffectMod = 5;
     private int openSpot = 0;
     private int openingLength;
     public float convoDelay = 0;
-    public int delayMax = 3;
+    public int delayMax = 2;
     private float trainTime = 0;
 
     private int closestProximity;
@@ -97,14 +97,25 @@ public class PersonHandler : MonoBehaviour
     }
 
     public void respond(Symbols input){
-        Symbols temp = (Symbols)3; //FLAG  remember to change when enum pushes go through
+        Symbols temp = (Symbols)5; //set to X
+
+        //character leaves if affection is too low
+        if (character.affection < 0){
+            character.leaves = true;
+        }
+
+        //deactivates character
         if (character.leaves){
             character.isActive = false;
         }
+
+        //prevents deactivated characters from responding
         if (!character.isActive){
             return;
         }
-        convoDelay = 0;
+        convoDelay = 0; //reset time since character last spoke
+
+        //says goodbye if train hits destination
         if (trainTime >= character.timeOut){
             if(character.affection > 60){
                 //say Circle X
@@ -116,6 +127,8 @@ public class PersonHandler : MonoBehaviour
             character.leaves = true;
             return;
         }
+
+        //checks for special cases and responds
         for (int i = 0; i < character.cases.Length; i++){
             if (input == character.cases[i].input){
                 //say character.cases[i].output;
@@ -123,12 +136,16 @@ public class PersonHandler : MonoBehaviour
                 return;
             }
         }
+
+        //recites opening text if applicable
         if(openSpot < openingLength){
             //say opening[openSpot]
             openSpot++; 
         }
+
+        //responses if player ends conversation
         else if((int)input%(int)temp==0){
-            if (input == (Symbols)9){ //FLAG remeber to change to triangle x
+            if (input == (Symbols)20){ //triangle x
                 character.affection -= 100;
             } 
             if(character.affection > 60){
@@ -140,10 +157,15 @@ public class PersonHandler : MonoBehaviour
             }
             character.leaves = true;
         }
+
+        //waiting for player response
         else if (input == (Symbols)0&&character.waits){
             //do nothing
         }
+
+        //general response
         else {
+            //say standard [random];
             character.affection += genAffectMod;
         }
 

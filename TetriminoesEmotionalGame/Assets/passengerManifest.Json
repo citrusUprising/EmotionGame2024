@@ -2,7 +2,7 @@
     "people":[
         {
             "name":"Creep",
-            "affection": 0,
+            "affection": 60,
             "spriteSheet":["Images/example"],
             "leaves": false,
             "waits": false,
