@@ -182,4 +182,22 @@ public class PersonHandler : MonoBehaviour
     public bool checkWait(){
         return character.waits;
     }
+
+    public void pickFrame (State mov){
+        //set rotation to 0;
+        if (mov == State.personLeave){
+            //set rotation to 180;
+            //this.GetComponent<SpriteRenderer>().sprite = frame 2;
+        }
+        else if (mov == State.personEnter){
+            //this.GetComponent<SpriteRenderer>().sprite = frame 2;
+        }
+        else{
+            //this.GetComponent<SpriteRenderer>().sprite = frame 1;
+        }
+    }
+
+    public int pullTimeOut(){
+        return character.timeOut;
+    }
 }
