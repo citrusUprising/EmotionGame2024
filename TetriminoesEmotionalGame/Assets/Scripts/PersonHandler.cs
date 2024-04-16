@@ -138,7 +138,11 @@ public class PersonHandler : MonoBehaviour
         }
 
         //recites opening text if applicable
+        //also punishes player for talking about complex topics too early
         if(openSpot < openingLength){
+            if((int)input > 5){
+                character.affection -= genAffectMod;
+            }
             speak(character.opening[openSpot]); 
             openSpot++; 
         }
@@ -159,7 +163,7 @@ public class PersonHandler : MonoBehaviour
         }
 
         //waiting for player response, this is mostly for security's sake
-        else if (input == (Symbols)0&&character.waits){
+        else if (input == Symbols.empty&&character.waits){
             //do nothing
         }
 

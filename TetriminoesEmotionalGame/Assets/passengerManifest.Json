@@ -3,7 +3,7 @@
         {
             "name":"Creep",
             "affection": 60,
-            "spriteSheet":["Images/example"],
+            "spriteSheet":["Images/example1","Images/example2"],
             "leaves": false,
             "waits": false,
             "isActive": false,
