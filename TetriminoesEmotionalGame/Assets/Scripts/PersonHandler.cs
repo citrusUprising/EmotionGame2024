@@ -42,7 +42,7 @@ public class PersonHandler : MonoBehaviour
     private int openSpot = 0;
     private int openingLength;
     public float convoDelay = 0;
-    public int delayMax = 2;
+    public float delayMax = 1;
     private float trainTime = 0;
 
     private int closestProximity;
@@ -177,5 +177,9 @@ public class PersonHandler : MonoBehaviour
 
     private void speak (Symbols output){
         //this handles character talking
+    }
+
+    public bool checkWait(){
+        return character.waits;
     }
 }

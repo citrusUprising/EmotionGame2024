@@ -55,9 +55,16 @@ public class ManageState : MonoBehaviour
                  }
                  timer += Time.deltaTime;
 
+                 if (!character.GetComponent<PersonHandler>().checkWait()&&
+                 !responding&&
+                 character.GetComponent<PersonHandler>().convoDelay >= character.GetComponent<PersonHandler>().delayMax){
+                    responseDelay();
+                 }
+
                  //on player input-------------------------------------------------------------------//
                  //savedSymbol = input
-                 if (character.GetComponent<PersonHandler>().convoDelay < character.GetComponent<PersonHandler>().delayMax){
+                 if (character.GetComponent<PersonHandler>().convoDelay < character.GetComponent<PersonHandler>().delayMax
+                 &&character.GetComponent<PersonHandler>().checkWait()){
                      character.GetComponent<PersonHandler>().annoy();
                  }
                  if (!responding){
