@@ -12,7 +12,7 @@ public enum State
     };
     public enum Symbols
     {
-        empty = 0,
+        empty = 1,
         square = 2,
         circle = 3,
         triangle = 4,

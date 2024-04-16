@@ -12,8 +12,10 @@ public class ThoughtBubble : MonoBehaviour
     [SerializeField] private SymbolKey leftKey;
 
     [SerializeField] private Color selectedColor;
+    [SerializeField] private SpeechBubble speechBubble;
 
     public List<SymbolKey> selectedKeys;
+    public List<SymbolKey> lastSelectedKeys;
 
     public int numOfAcceptedSymbols = 2;
 
@@ -60,6 +62,12 @@ public class ThoughtBubble : MonoBehaviour
             removeSelectedKey(leftKey);
         }
         highlightKeys();
+
+        if (lastSelectedKeys != selectedKeys)
+        {
+            speechBubble.updateSymbolList();
+        }
+        lastSelectedKeys = selectedKeys;
     }
 
     void addSelectedKey(SymbolKey key)

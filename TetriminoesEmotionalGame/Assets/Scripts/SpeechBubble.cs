@@ -1,12 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpeechBubble : MonoBehaviour
 {
     
     [SerializeField] ThoughtBubble thoughtBubble;
-    int[] symbolArray = new int[] {-1, -1};
+    [SerializeField] Image displayedSymbol;
+    [SerializeField] Sprite circleSprite;
+    [SerializeField] Sprite squareSprite;
+    [SerializeField] Sprite triangleSprite;
+    [SerializeField] Sprite xSprite;
+    [SerializeField] Sprite circleSquareSprite;
+    [SerializeField] Sprite circleTriangleSprite;
+    [SerializeField] Sprite circleXSprite;
+    [SerializeField] Sprite squareTriangleSprite;
+    [SerializeField] Sprite squareXSprite;
+    [SerializeField] Sprite triangleXSprite;
+    int[] symbolArray = new int[] {(int)Symbols.empty, (int)Symbols.empty};
+
     
     // Start is called before the first frame update
     void Start()
@@ -20,11 +33,10 @@ public class SpeechBubble : MonoBehaviour
         updateSymbolList();
     }
 
-    // it would be helpful if there was a "none" value for symbols so i didn't have to cast to int here
-    void updateSymbolList()
+    public void updateSymbolList()
     {
-        symbolArray[0] = -1;
-        symbolArray[1] = -1;
+        symbolArray[0] = (int)Symbols.empty;
+        symbolArray[1] = (int)Symbols.empty;
         if (thoughtBubble.selectedKeys.Count > 1)
         {
             symbolArray[1] = (int)thoughtBubble.selectedKeys[1].symbol;
@@ -32,6 +44,70 @@ public class SpeechBubble : MonoBehaviour
         if (thoughtBubble.selectedKeys.Count > 0)
         {
             symbolArray[0] = (int)thoughtBubble.selectedKeys[0].symbol;
+        }
+        drawSymbol();
+    }
+
+    void drawSymbol()
+    {
+        int symbolIndex = symbolArray[0] * symbolArray[1];
+        
+        if (symbolIndex == 1)
+        {
+            displayedSymbol.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+            return;
+        }
+        displayedSymbol.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+        if (symbolIndex == (int)Symbols.circle)
+        {
+            displayedSymbol.sprite = circleSprite;
+            return;
+        }
+        if (symbolIndex == (int)Symbols.square)
+        {
+            displayedSymbol.sprite = squareSprite;
+            return;
+        }
+        if (symbolIndex == (int)Symbols.triangle)
+        {
+            displayedSymbol.sprite = triangleSprite;
+            return;
+        }
+        if (symbolIndex == (int)Symbols.ex)
+        {
+            displayedSymbol.sprite = xSprite;
+            return;
+        }
+        if (symbolIndex == (int)Symbols.squareCirc)
+        {
+            displayedSymbol.sprite = circleSquareSprite;
+            return;
+        }
+        if (symbolIndex == (int)Symbols.squareTri)
+        {
+            displayedSymbol.sprite = squareTriangleSprite;
+            return;
+        }
+        if (symbolIndex == (int)Symbols.squareX)
+        {
+            displayedSymbol.sprite = squareXSprite;
+            return;
+        }
+        if (symbolIndex == (int)Symbols.circleTri)
+        {
+            displayedSymbol.sprite = circleTriangleSprite;
+            return;
+        }
+        if (symbolIndex == (int)Symbols.circleX)
+        {
+            displayedSymbol.sprite = circleXSprite;
+            return;
+        }
+        if (symbolIndex == (int)Symbols.triangleX)
+        {
+            displayedSymbol.sprite = triangleXSprite;
+            return;
         }
     }
 }
