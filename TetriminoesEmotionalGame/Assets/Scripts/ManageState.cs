@@ -9,12 +9,22 @@ public class ManageState : MonoBehaviour
     public GameObject character;
     private int currentChar = 0;
     private State game;
-    private bool onSwitch;
+    private bool onSwitch = true;
     private Vector3 camOut;
     private Vector3 camIn;
     private float timer = 0;
-    private Symbols savedSymbol = (Symbols)0;
+    private Symbols savedSymbol = Symbols.empty;
     private bool responding = false;
+    private bool startedTalk = false;
+
+    private Vector3 startPoint;
+    private Vector3 endPoint;
+    //section time limits
+    private float startTime = 5;
+    private float enterTime = 5;
+    private float leaveTime = 5;
+    private float endTime = 5;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,32 +36,51 @@ public class ManageState : MonoBehaviour
     void Update()
     {
         switch(game){
-            case State.start: //Opening cinematic
+            case State.start: //Opening cinematic---------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 timer += Time.deltaTime;
+                if(timer >= startTime){
+                    game = State.personEnter;
+                }
             break;
 
-            case State.personEnter: //when a new person is entering the train
+            case State.personEnter: //when a new person is entering the train------------------------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
                     character.GetComponent<PersonHandler>().importJSON(currentChar);
                     timer = 0;
                     onSwitch = false;
+                    startedTalk = false;
+                    character.GetComponent<PersonHandler>().pickFrame(game);
                 }
                 timer += Time.deltaTime;
+
+                //moves new character
+                
+                //ends entering scene
+                if(timer >= enterTime){
+                    game = State.sitting;
+                    onSwitch = true;
+                }
             break;
 
-            case State.sitting: //when the train is moving but a conversation hasn't started
+            case State.sitting: //when the train is moving but a conversation hasn't started---------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
-                    timer = 0;
                     onSwitch = false;
+                    character.GetComponent<PersonHandler>().pickFrame(game);
                 }
                 timer += Time.deltaTime;
+                if(!startedTalk){
+                    
+                }
+                else if (timer >= character.GetComponent<PersonHandler>().pullTimeOut()){
+
+                }
             break;
 
-            case State.talking: //when the player is in conversation
+            case State.talking: //when the player is in conversation---------------------------------------------------------------------------------------------------------------------------------------------------
                  if(onSwitch){
                      character.GetComponent<PersonHandler>().enable();
-                     timer = 0;
                      onSwitch = false;
+                     startedTalk = true;
                  }
                  timer += Time.deltaTime;
 
@@ -72,23 +101,24 @@ public class ManageState : MonoBehaviour
                  }
             break;
 
-            case State.personLeave: //when a person is exiting the train
+            case State.personLeave: //when a person is exiting the train-----------------------------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
                     timer = 0;
                     onSwitch = false;
                     savedSymbol = Symbols.empty;
+                    character.GetComponent<PersonHandler>().pickFrame(game);
                 }
                 timer += Time.deltaTime;
             break;
 
-            case State.end: //closing cinematic
+            case State.end: //closing cinematic-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
                     onSwitch = false;
                 }
                 timer += Time.deltaTime;
             break;
 
-            default:
+            default://---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             break;
         }
     }
@@ -99,5 +129,17 @@ public class ManageState : MonoBehaviour
         character.GetComponent<PersonHandler>().respond(savedSymbol);
         savedSymbol = Symbols.empty;
         responding = false;
+    }
+
+    private void end(){
+        if((int)game>=4&&(int)game<=5){
+            game = State.personLeave;
+            onSwitch = true;
+        }
+    }
+
+    private void delayEnd(){
+        //delay
+        end();
     }
 }
