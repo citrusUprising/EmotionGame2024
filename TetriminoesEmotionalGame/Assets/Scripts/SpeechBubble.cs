@@ -19,7 +19,7 @@ public class SpeechBubble : MonoBehaviour
     [SerializeField] Sprite squareXSprite;
     [SerializeField] Sprite triangleXSprite;
     int[] symbolArray = new int[] {(int)Symbols.empty, (int)Symbols.empty};
-
+    public int symbolIndex;
     
     // Start is called before the first frame update
     void Start()
@@ -44,7 +44,7 @@ public class SpeechBubble : MonoBehaviour
 
     void drawSymbol()
     {
-        int symbolIndex = symbolArray[0] * symbolArray[1];
+        symbolIndex = symbolArray[0] * symbolArray[1];
         
         if (symbolIndex == 1)
         {

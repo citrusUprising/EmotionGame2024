@@ -41,7 +41,7 @@ public class Teeter : MonoBehaviour
 
             t = easeInOutCubic(t);
 
-            r = Mathf.Lerp(oldRotation, newRotation, t / teeterDuration);
+            r = Mathf.Lerp(oldRotation, newRotation, t);
 
             rect.eulerAngles = new Vector3(rect.eulerAngles.x, rect.eulerAngles.y, r);
 
