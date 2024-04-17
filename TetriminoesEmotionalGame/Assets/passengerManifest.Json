@@ -1,12 +1,3 @@
-Characters will by default recite each symbol in their opening in order
-If the player responds with a compound symbol during the opening affection decreases
-Once the opening is finished, they will recite one of the symbols from their standard list randomly
-"waits" determines if they wait for player input between symbols
-
-If the player says any variation of X, the character will respond based on affection, then end the conversation
-
-If the olayer says any of the inputs in the character's special cases, the character will respond with the given output, and have their affection changed by the respective "affect"
-NOTE: SPECIAL CASES SUPERCEDE ALL OTHER INTERACTIONS, PAUSING OPENING AND CANCELING X VALUES WHEN THEY ARE THE INPUT
 {
     "people":[
         {
@@ -38,8 +29,8 @@ NOTE: SPECIAL CASES SUPERCEDE ALL OTHER INTERACTIONS, PAUSING OPENING AND CANCEL
             "opening": [3],
             "timeOut": 300
         },
-        //Turned waits to false which they keeps talk while player dont have chance to interrupt
-        //May duplicate this to make conversation between npcs?
+        // Turned waits to false which they keeps talk while player dont have chance to interrupt
+        // May duplicate this to make conversation between npcs?
         {
             "name":"overheard",
             "affection": 0,
@@ -57,6 +48,7 @@ NOTE: SPECIAL CASES SUPERCEDE ALL OTHER INTERACTIONS, PAUSING OPENING AND CANCEL
             "opening": [8],
             "timeOut": 120
         },
+        // not sure how the agree work in game
         {
             "name":"pair",
             "affection": 60,
@@ -125,12 +117,10 @@ NOTE: SPECIAL CASES SUPERCEDE ALL OTHER INTERACTIONS, PAUSING OPENING AND CANCEL
             "opening": [3],
             "timeOut": 60
         },
-        //player should start the conversation
-        //NPC start for now
-        //should add check amount of symbols player input 
+        // better count how many symbols player and npc input
         {
             "name":"headphone",
-            "affection": 0,
+            "affection": 3,
             "spriteSheet":["Images/example"],
             "leaves": false,
             "waits": true,
@@ -138,16 +128,37 @@ NOTE: SPECIAL CASES SUPERCEDE ALL OTHER INTERACTIONS, PAUSING OPENING AND CANCEL
             "proximity": 50,
             "cases":[
                 {
-                    
+                    "input": [2,3,4,5,6,8,10,12,15,20],
+                    "output": 1,
+                    "affect": -1
                 }
             ],
-            "standard": [2,6],
-            "opening": [8],
-            "timeOut": 300
+            "standard": [],
+            "opening": [],
+            "timeOut": 45
+        },
+        // this is another part of headphone
+        // dont let player respond
+        {
+            "name":"headphoneoff",
+            "affection": 3,
+            "spriteSheet":["Images/example"],
+            "leaves": false,
+            "waits": false,
+            "isActive": false,
+            "proximity": 50,
+            "cases":[
+                {
+
+                }
+            ],
+            "standard": [],
+            "opening": [12],
+            "timeOut": 10
         },
         {
             "name":"drunk",
-            "affection": 0,
+            "affection": 100,
             "spriteSheet":["Images/example"],
             "leaves": false,
             "waits": true,
@@ -155,16 +166,28 @@ NOTE: SPECIAL CASES SUPERCEDE ALL OTHER INTERACTIONS, PAUSING OPENING AND CANCEL
             "proximity": 50,
             "cases":[
                 {
-
+                    "input": 2,
+                    "output": 3,
+                    "affect": 0
+                },
+                {
+                    "input": 5,
+                    "output": 5,
+                    "affect": -61
+                },
+                {
+                    "input": 15,
+                    "output": 2,
+                    "affect": -61
                 }
             ],
-            "standard": [],
+            "standard": [1,2,3,4,5,6,7,10,12,15,20],
             "opening": [],
-            "timeOut": 300
+            "timeOut": 60
         },
         {
             "name":"getpass",
-            "affection": 0,
+            "affection": 60,
             "spriteSheet":["Images/example"],
             "leaves": false,
             "waits": true,
@@ -172,12 +195,14 @@ NOTE: SPECIAL CASES SUPERCEDE ALL OTHER INTERACTIONS, PAUSING OPENING AND CANCEL
             "proximity": 50,
             "cases":[
                 {
-
+                    "input": 3,
+                    "output": 3,
+                    "affect": -61
                 }
             ],
-            "standard": [],
-            "opening": [],
-            "timeOut": 300
+            "standard": [2,3],
+            "opening": [2],
+            "timeOut": 30
         }
     ]
 }
