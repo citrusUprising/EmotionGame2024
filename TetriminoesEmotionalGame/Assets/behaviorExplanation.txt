@@ -1,9 +1,0 @@
-Characters will by default recite each symbol in their opening in order
-If the player responds with a compound symbol during the opening affection decreases
-Once the opening is finished, they will recite one of the symbols from their standard list randomly
-"waits" determines if they wait for player input between symbols
-
-If the player says any variation of X, the character will respond based on affection, then end the conversation
-
-If the olayer says any of the inputs in the character's special cases, the character will respond with the given output, and have their affection changed by the respective "affect"
-NOTE: SPECIAL CASES SUPERCEDE ALL OTHER INTERACTIONS, PAUSING OPENING AND CANCELING X VALUES WHEN THEY ARE THE INPUT
