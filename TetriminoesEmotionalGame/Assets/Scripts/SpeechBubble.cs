@@ -42,6 +42,13 @@ public class SpeechBubble : MonoBehaviour
         drawSymbol();
     }
 
+        public void updateSymbolList(Symbols s1)
+    {
+        symbolArray[0] = (int)s1;
+        symbolArray[1] = (int)Symbols.empty;
+        drawSymbol();
+    }
+
     void drawSymbol()
     {
         symbolIndex = symbolArray[0] * symbolArray[1];

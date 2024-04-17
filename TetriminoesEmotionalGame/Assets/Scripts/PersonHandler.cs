@@ -14,7 +14,7 @@ public class specialCases{
 public class Person{
     public string name;
     public int affection; // caps at -1 and 100
-    public Image[] spriteSheet;
+    public Sprite[] spriteSheet;
     public bool leaves = false;
     public bool waits;
     public bool isActive = false;
@@ -35,6 +35,7 @@ public class PersonHandler : MonoBehaviour
     //Json
     [SerializeField] private TextAsset manifestJson; //assigned in inspector
     [SerializeField] private AllPeople manifestData;
+    [SerializeField] private SpeechBubble toSay;
     private Person character;
 
     //minutae
@@ -45,7 +46,7 @@ public class PersonHandler : MonoBehaviour
     public float delayMax = 1;
     private float trainTime = 0;
 
-    private int closestProximity;
+    private int closestProximity = 10;
 
 
     void Awake(){
@@ -176,7 +177,7 @@ public class PersonHandler : MonoBehaviour
     }
 
     private void speak (Symbols output){
-        //this handles character talking
+        toSay.updateSymbolList(output);
     }
 
     public bool checkWait(){
@@ -187,17 +188,29 @@ public class PersonHandler : MonoBehaviour
         //set rotation to 0;
         if (mov == State.personLeave){
             //set rotation to 180;
-            //this.GetComponent<SpriteRenderer>().sprite = frame 2;
+            this.GetComponent<SpriteRenderer>().sprite = character.spriteSheet[1];
         }
         else if (mov == State.personEnter){
-            //this.GetComponent<SpriteRenderer>().sprite = frame 2;
+            this.GetComponent<SpriteRenderer>().sprite = character.spriteSheet[1];
         }
         else{
-            //this.GetComponent<SpriteRenderer>().sprite = frame 1;
+            this.GetComponent<SpriteRenderer>().sprite = character.spriteSheet[0];
         }
     }
 
     public int pullTimeOut(){
         return character.timeOut;
+    }
+
+    public int pullTotal(){
+        return manifestData.people.Length;
+    }
+
+    public bool pullActive(){
+        return character.isActive;
+    }
+
+    public string pullName(){
+        return character.name;
     }
 }
