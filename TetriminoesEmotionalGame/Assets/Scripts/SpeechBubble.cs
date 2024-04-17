@@ -30,21 +30,15 @@ public class SpeechBubble : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        updateSymbolList();
+        
     }
 
-    public void updateSymbolList()
+    
+    // called by other objects (thought bubble for the player) to draw the symbols
+    public void updateSymbolList(Symbols s1, Symbols s2)
     {
-        symbolArray[0] = (int)Symbols.empty;
-        symbolArray[1] = (int)Symbols.empty;
-        if (thoughtBubble.selectedKeys.Count > 1)
-        {
-            symbolArray[1] = (int)thoughtBubble.selectedKeys[1].symbol;
-        }
-        if (thoughtBubble.selectedKeys.Count > 0)
-        {
-            symbolArray[0] = (int)thoughtBubble.selectedKeys[0].symbol;
-        }
+        symbolArray[0] = (int)s1;
+        symbolArray[1] = (int)s2;
         drawSymbol();
     }
 

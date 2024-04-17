@@ -15,7 +15,6 @@ public class ThoughtBubble : MonoBehaviour
     [SerializeField] private SpeechBubble speechBubble;
 
     public List<SymbolKey> selectedKeys;
-    public List<SymbolKey> lastSelectedKeys;
 
     public int numOfAcceptedSymbols = 2;
 
@@ -63,11 +62,20 @@ public class ThoughtBubble : MonoBehaviour
         }
         highlightKeys();
 
-        if (lastSelectedKeys != selectedKeys)
-        {
-            speechBubble.updateSymbolList();
-        }
-        lastSelectedKeys = selectedKeys;
+        updateThoughtBubbleSymbols();
+    }
+
+    void updateThoughtBubbleSymbols()
+    {
+        Symbols symbol1 = Symbols.empty;
+        Symbols symbol2 = Symbols.empty;
+
+        if (selectedKeys.Count > 1)
+            symbol1 = selectedKeys[1].symbol;
+        if (selectedKeys.Count > 0)
+            symbol2 = selectedKeys[0].symbol;
+
+        speechBubble.updateSymbolList(symbol1, symbol2);
     }
 
     void addSelectedKey(SymbolKey key)
@@ -90,8 +98,6 @@ public class ThoughtBubble : MonoBehaviour
 
     void removeSelectedKey(SymbolKey key)
     {
-        
-
         if (selectedKeys.Count > 1 && selectedKeys[1] == key)
                 selectedKeys.RemoveAt(1);
         
