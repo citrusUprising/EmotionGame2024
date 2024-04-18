@@ -270,7 +270,7 @@ Transform:
   m_GameObject: {fileID: 520255027}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30, y: 0, z: 0}
+  m_LocalPosition: {x: -250, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -291,6 +291,7 @@ MonoBehaviour:
   manifestJson: {fileID: 4900000, guid: b98f39db9cc395c4dad047f9ea9af9b7, type: 3}
   manifestData:
     people: []
+  toSay: {fileID: 0}
   convoDelay: 0
   delayMax: 3
 --- !u!1 &705507993
@@ -524,7 +525,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 963194225}
+  player: {fileID: 2132778391}
   character: {fileID: 520255027}
+  timer: 0
 --- !u!1 &1717859092
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +638,7 @@ Transform:
   m_GameObject: {fileID: 2132778391}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -250, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

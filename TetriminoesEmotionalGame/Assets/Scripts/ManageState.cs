@@ -6,6 +6,7 @@ public class ManageState : MonoBehaviour
 {
     
     public GameObject camera;
+    public GameObject player;
     public GameObject character;
     private int currentChar = 0;
     private State game;
@@ -20,7 +21,8 @@ public class ManageState : MonoBehaviour
     private int safetyTime = 15; //amount of seconds after fucking up a conversation before a character change is forced
 
     private Vector3 startPoint;
-    private Vector3 endPoint;
+    private Vector3 endPointChar;
+    private Vector3 endPointPlayer;
     //section time limits
     private float startTime = 5;
     private float enterTime = 5;
@@ -31,6 +33,9 @@ public class ManageState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startPoint = new Vector3(-250.0f,1.0f,1.0f);//FLAG change as appropriate
+        endPointChar = new Vector3(-30.0f,1.0f,1.0f);
+        endPointPlayer = new Vector3(0.0f,1.0f,1.0f);
         game = State.start;
     }
 
@@ -39,8 +44,13 @@ public class ManageState : MonoBehaviour
     {
         switch(game){
             case State.start: //Opening cinematic---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                if(onSwitch){
+                    onSwitch = false;
+                    StartCoroutine(lerp(player,startPoint,endPointPlayer,startTime, false));
+                }
                 timer += Time.deltaTime;
                 if(timer >= startTime){
+                    onSwitch = true;
                     Debug.Log("You've sat down");
                     game = State.personEnter;
                 }
@@ -53,6 +63,7 @@ public class ManageState : MonoBehaviour
                     onSwitch = false;
                     startedTalk = false;
                     character.GetComponent<PersonHandler>().pickFrame(game);
+                    StartCoroutine(lerp(character,startPoint,endPointChar,enterTime, false));
                     Debug.Log("Someone is coming");
                 }
                 timer += Time.deltaTime;
@@ -129,6 +140,7 @@ public class ManageState : MonoBehaviour
                     savedSymbol = Symbols.empty;
                     character.GetComponent<PersonHandler>().pickFrame(game);
                     currentChar++;
+                    StartCoroutine(lerp(character,endPointChar,startPoint,leaveTime, true));
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" is leaving");
                 }
                 timer += Time.deltaTime;
@@ -149,6 +161,7 @@ public class ManageState : MonoBehaviour
             case State.end: //closing cinematic-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
                     onSwitch = false;
+                    StartCoroutine(lerp(player,endPointPlayer,startPoint,endTime, true));
                     Debug.Log("You've arrived at your station");
                 }
                 timer += Time.deltaTime;
@@ -198,5 +211,32 @@ public class ManageState : MonoBehaviour
         if (!responding){
             StartCoroutine(responseDelay());
         }
+    }
+
+    IEnumerator lerp(GameObject agent, Vector3 start, Vector3 end, float duration, bool easeIn)
+    {
+        float time = 0.0f;
+        Vector3 d = start;
+
+        while (time < duration)
+        {
+            float t = time / duration;
+
+            t = -(Mathf.Cos(Mathf.PI * t) - 1) / 2; //swap to to either ease in or out depending on bool //FLAG
+            if(easeIn){
+                //ease in
+            }else{
+                //ease out
+            }
+
+            d = Vector3.Lerp(start, end, t);
+
+            agent.GetComponent<Transform>().localPosition = d;
+
+            time += Time.deltaTime;
+
+            yield return null;
+        }
+        agent.GetComponent<Transform>().localPosition = d;
     }
 }

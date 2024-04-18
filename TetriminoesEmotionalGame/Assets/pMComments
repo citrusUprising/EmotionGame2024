@@ -1,0 +1,6 @@
+32        // Turned waits to false which they keeps talk while player dont have chance to interrupt
+33        // May duplicate this to make conversation between npcs?
+49        // not sure how the agree work in game
+117       // better count how many symbols player and npc input
+136       // this is another part of headphone
+137       // dont let player respond

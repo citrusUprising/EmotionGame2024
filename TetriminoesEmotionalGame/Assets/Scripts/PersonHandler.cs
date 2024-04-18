@@ -185,9 +185,9 @@ public class PersonHandler : MonoBehaviour
     }
 
     public void pickFrame (State mov){
-        //set rotation to 0;
+        this.GetComponent<SpriteRenderer>().flipX = false;
         if (mov == State.personLeave){
-            //set rotation to 180;
+            this.GetComponent<SpriteRenderer>().flipX = true;
             this.GetComponent<SpriteRenderer>().sprite = character.spriteSheet[1];
         }
         else if (mov == State.personEnter){
