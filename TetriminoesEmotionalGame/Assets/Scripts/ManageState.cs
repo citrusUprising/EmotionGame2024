@@ -91,6 +91,7 @@ public class ManageState : MonoBehaviour
                     character.GetComponent<PersonHandler>().pickFrame(game);
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" sat next to you");
                     bubbles.enabled = true;
+                    savedSymbol = Symbols.empty;
                 }
                 timer += Time.deltaTime;
 
@@ -156,7 +157,6 @@ public class ManageState : MonoBehaviour
                     currentChar++;
                     StartCoroutine(lerp(character,character.GetComponent<Transform>().localPosition,startPoint,leaveTime, true));
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" is leaving");
-                    bubbles.enabled = false;
                 }
                 timer += Time.deltaTime;
 
@@ -178,6 +178,7 @@ public class ManageState : MonoBehaviour
                     onSwitch = false;
                     StartCoroutine(lerp(player,endPointPlayer,startPoint,endTime, true));
                     Debug.Log("You've arrived at your station");
+                    bubbles.enabled = false;
                 }
                 timer += Time.deltaTime;
                 if(timer >= endTime){
