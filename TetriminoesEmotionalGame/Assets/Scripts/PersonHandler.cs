@@ -8,6 +8,7 @@ public class specialCases{
     public Symbols input;
     public Symbols output;
     public int affect;
+    public int trigger = 0;
 }
 
 [System.Serializable]
@@ -46,6 +47,7 @@ public class PersonHandler : MonoBehaviour
     public float convoDelay = 0;
     public float delayMax = 1;
     private float trainTime = 0;
+    private int chatCount = 0;
 
     private int closestProximity = 10;
 
@@ -92,6 +94,7 @@ public class PersonHandler : MonoBehaviour
         character = manifestData.people[i];
         openingLength = character.opening.Length;
         openSpot = 0;
+        chatCount = 0;
     }
     public void enable(){
         character.isActive = true;
@@ -114,6 +117,7 @@ public class PersonHandler : MonoBehaviour
             return;
         }
         convoDelay = 0; //reset time since character last spoke
+        chatCount ++;
 
         //says goodbye if train hits destination
         if (trainTime >= character.timeOut){
@@ -130,7 +134,7 @@ public class PersonHandler : MonoBehaviour
 
         //checks for special cases and responds
         for (int i = 0; i < character.cases.Length; i++){
-            if (input == character.cases[i].input){
+            if (input == character.cases[i].input &&){
                 speak(character.cases[i].output);
                 character.affection += character.cases[i].affect;
                 return;
