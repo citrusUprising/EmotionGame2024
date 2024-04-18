@@ -565,7 +565,6 @@ MonoBehaviour:
   spaceBarToolTip: {fileID: 7768895239023109845}
   selectedKeys: []
   numOfAcceptedSymbols: 2
-  chooseSymbolPause: 2
 --- !u!114 &3298400574974711251
 MonoBehaviour:
   m_ObjectHideFlags: 0

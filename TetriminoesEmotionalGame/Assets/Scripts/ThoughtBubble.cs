@@ -151,6 +151,7 @@ public class ThoughtBubble : MonoBehaviour
         if (selectedKeys.Count == 0)
             return;
         updateSpeechBubbleSymbols();
+        speechBubble.playSound(speechBubble.chordSFX);
         
         StartCoroutine(hideSelf());
     }

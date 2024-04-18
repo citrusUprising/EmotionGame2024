@@ -20,6 +20,12 @@ public class SpeechBubble : MonoBehaviour
     [SerializeField] Sprite triangleXSprite;
     int[] symbolArray = new int[] {(int)Symbols.empty, (int)Symbols.empty};
     public int symbolIndex;
+    int oldSymbolIndex = -0;
+
+    [SerializeField] AudioSource audioSource;
+
+    public AudioClip blipSFX;    
+    public AudioClip chordSFX;   
     
     // Start is called before the first frame update
     void Start()
@@ -52,6 +58,11 @@ public class SpeechBubble : MonoBehaviour
     void drawSymbol()
     {
         symbolIndex = symbolArray[0] * symbolArray[1];
+
+        if (oldSymbolIndex != symbolIndex && symbolIndex != 1)
+            playSound(blipSFX);
+        
+        oldSymbolIndex = symbolIndex;
         
         if (symbolIndex == 1)
         {
@@ -110,5 +121,11 @@ public class SpeechBubble : MonoBehaviour
             displayedSymbol.sprite = triangleXSprite;
             return;
         }
+    }
+
+    public void playSound(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();   
     }
 }
