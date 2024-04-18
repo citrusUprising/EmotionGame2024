@@ -15,6 +15,7 @@ public class ThoughtBubble : MonoBehaviour
     [SerializeField] private SpeechBubble speechBubble;
 
     [SerializeField] private SpaceBarToolTip spaceBarToolTip;
+    private Symbols currentSymbol;
 
     public List<SymbolKey> selectedKeys;
 
@@ -91,7 +92,12 @@ public class ThoughtBubble : MonoBehaviour
         if (selectedKeys.Count > 0)
             symbol2 = selectedKeys[0].symbol;
 
+        currentSymbol =(Symbols)((int)symbol1*(int)symbol2);
         speechBubble.updateSymbolList(symbol1, symbol2);
+    }
+
+    public Symbols returnSpeech(){
+        return currentSymbol;
     }
 
     void addSelectedKey(SymbolKey key)

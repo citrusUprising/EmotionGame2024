@@ -3,7 +3,7 @@
         {
             "name":"Creep",
             "affection": 60,
-            "spriteSheet":["Images/example1","Images/example2"],
+            "spriteSheet":["example1","example2"],
             "waits": false,
             "proximity": 50,
             "cases":[
@@ -30,7 +30,7 @@
         {
             "name":"overheard",
             "affection": 0,
-            "spriteSheet":["Images/example"],
+            "spriteSheet":["example"],
             "waits": false,
             "proximity": 50,
             "cases":[
@@ -45,7 +45,7 @@
         {
             "name":"pair",
             "affection": 60,
-            "spriteSheet":["Images/example"],
+            "spriteSheet":["example"],
             "waits": true,
             "proximity": 50,
             "cases":[
@@ -77,7 +77,7 @@
         {
             "name":"pregnant",
             "affection": 60,
-            "spriteSheet":["Images/example"],
+            "spriteSheet":["example"],
             "waits": true,
             "proximity": 50,
             "cases":[
@@ -109,7 +109,7 @@
         {
             "name":"headphone",
             "affection": 3,
-            "spriteSheet":["Images/example"],
+            "spriteSheet":["example"],
             "waits": true,
             "proximity": 50,
             "cases":[
@@ -126,7 +126,7 @@
         {
             "name":"headphoneoff",
             "affection": 3,
-            "spriteSheet":["Images/example"],
+            "spriteSheet":["example"],
             "waits": false,
             "proximity": 50,
             "cases":[
@@ -141,7 +141,7 @@
         {
             "name":"drunk",
             "affection": 100,
-            "spriteSheet":["Images/example"],
+            "spriteSheet":["example"],
             "waits": true,
             "proximity": 50,
             "cases":[
@@ -168,7 +168,7 @@
         {
             "name":"getpass",
             "affection": 60,
-            "spriteSheet":["Images/example"],
+            "spriteSheet":["example"],
             "waits": true,
             "proximity": 50,
             "cases":[

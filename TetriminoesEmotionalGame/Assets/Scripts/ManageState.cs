@@ -8,6 +8,9 @@ public class ManageState : MonoBehaviour
     public GameObject camera;
     public GameObject player;
     public GameObject character;
+    public ThoughtBubble thoughts;
+    public Canvas bubbles;
+    public GameObject npcSpeech;
     private int currentChar = 0;
     private State game;
     private bool onSwitch = true;
@@ -33,10 +36,14 @@ public class ManageState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startPoint = new Vector3(-250.0f,1.0f,1.0f);//FLAG change as appropriate
-        endPointChar = new Vector3(-30.0f,1.0f,1.0f);
-        endPointPlayer = new Vector3(0.0f,1.0f,1.0f);
+        startPoint = new Vector3(-1300.0f,-570.0f,1.0f);//FLAG change as appropriate
+        endPointChar = new Vector3(-1030.0f,-570.0f,1.0f);
+        endPointPlayer = new Vector3(-910.0f,-570.0f,1.0f);
+        character.GetComponent<Transform>().localPosition = startPoint;
+        player.GetComponent<Transform>().localPosition = startPoint;
         game = State.start;
+        bubbles.enabled = false;
+        character.GetComponent<PersonHandler>().setFixedPos(endPointChar);
     }
 
     // Update is called once per frame
@@ -63,17 +70,17 @@ public class ManageState : MonoBehaviour
                     onSwitch = false;
                     startedTalk = false;
                     character.GetComponent<PersonHandler>().pickFrame(game);
+                    //moves new character
                     StartCoroutine(lerp(character,startPoint,endPointChar,enterTime, false));
                     Debug.Log("Someone is coming");
                 }
                 timer += Time.deltaTime;
-
-                //moves new character
                 
                 //ends entering scene
                 if(timer >= enterTime){
                     game = State.sitting;
                     onSwitch = true;
+                    timer = 0;
                 }
             break;
 
@@ -83,18 +90,22 @@ public class ManageState : MonoBehaviour
                     onSwitch = false;
                     character.GetComponent<PersonHandler>().pickFrame(game);
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" sat next to you");
+                    bubbles.enabled = true;
                 }
                 timer += Time.deltaTime;
 
                 //safety catch  prevents players from waiting TOO long
-                if(startedTalk&&timer<character.GetComponent<PersonHandler>().pullTimeOut()-safetyTime){
-                    timer=character.GetComponent<PersonHandler>().pullTimeOut()-safetyTime;
+                if(startedTalk){
+                    npcSpeech.SetActive(false);
+                    if(timer<character.GetComponent<PersonHandler>().pullTimeOut()-safetyTime){
+                        timer=character.GetComponent<PersonHandler>().pullTimeOut()-safetyTime;
+                    }
                 }
 
                 if (timer >= character.GetComponent<PersonHandler>().pullTimeOut()){
                     end();
                 }
-                else if (Input.GetKeyDown(KeyCode.Space)){
+                else if (Input.GetKeyDown(KeyCode.Space)||!character.GetComponent<PersonHandler>().checkWait()){
                     if(!startedTalk){
                         game = State.talking;
                         character.GetComponent<PersonHandler>().enable();
@@ -108,13 +119,14 @@ public class ManageState : MonoBehaviour
                  if(onSwitch){
                     //set camera to zoom in
                     onSwitch = false;
+                    npcSpeech.SetActive(true);
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" started talking");
                  }
                  timer += Time.deltaTime;
 
                  if (!character.GetComponent<PersonHandler>().checkWait()&&
-                 !responding&&
-                 character.GetComponent<PersonHandler>().convoDelay >= character.GetComponent<PersonHandler>().delayMax){
+                 !responding/*&&
+                 character.GetComponent<PersonHandler>().convoDelay >= character.GetComponent<PersonHandler>().delayMax*/){
                     StartCoroutine(responseDelay());
                  }
 
@@ -125,6 +137,7 @@ public class ManageState : MonoBehaviour
                     onSwitch = true;
                     game = State.sitting;
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" stopped talking");
+                    npcSpeech.SetActive(false);
                 }
 
                  //on player input-------------------------------------------------------------------//
@@ -140,8 +153,9 @@ public class ManageState : MonoBehaviour
                     savedSymbol = Symbols.empty;
                     character.GetComponent<PersonHandler>().pickFrame(game);
                     currentChar++;
-                    StartCoroutine(lerp(character,endPointChar,startPoint,leaveTime, true));
+                    StartCoroutine(lerp(character,character.GetComponent<Transform>().localPosition,startPoint,leaveTime, true));
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" is leaving");
+                    bubbles.enabled = false;
                 }
                 timer += Time.deltaTime;
 
@@ -187,6 +201,7 @@ public class ManageState : MonoBehaviour
     private void end(){
         if((int)game>=4&&(int)game<=5){
             game = State.personLeave;
+            npcSpeech.SetActive(false);
             onSwitch = true;
         }
     }
@@ -203,7 +218,8 @@ public class ManageState : MonoBehaviour
 
     private void handleInput(){
         startedTalk = true;
-        //code to change savedSymbol
+        savedSymbol = thoughts.returnSpeech();
+
         if (character.GetComponent<PersonHandler>().convoDelay < character.GetComponent<PersonHandler>().delayMax
         &&character.GetComponent<PersonHandler>().checkWait()){
             character.GetComponent<PersonHandler>().annoy();

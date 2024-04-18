@@ -14,7 +14,7 @@ public class specialCases{
 public class Person{
     public string name;
     public int affection; // caps at -1 and 100
-    public Sprite[] spriteSheet;
+    public string[] spriteSheet;
     public bool leaves = false;
     public bool waits;
     public bool isActive = false;
@@ -37,6 +37,7 @@ public class PersonHandler : MonoBehaviour
     [SerializeField] private AllPeople manifestData;
     [SerializeField] private SpeechBubble toSay;
     private Person character;
+    private Vector3 fixedPos;
 
     //minutae
     private int genAffectMod = 5;
@@ -73,12 +74,15 @@ public class PersonHandler : MonoBehaviour
         if (!character.leaves && convoDelay < delayMax){
             convoDelay += Time.deltaTime;
         }
-        if(character.name == "Creep"&&character.proximity > closestProximity){
+        if(character.name == "Creep"&&character.proximity > closestProximity&&character.isActive){
             character.proximity -= Time.deltaTime;
         }
         if (character.affection < 0){
             character.leaves = true;
         }
+        if(character.isActive){
+            this.GetComponent<Transform>().localPosition = new Vector3 (fixedPos.x + (50-character.proximity), fixedPos.y, fixedPos.z);
+        } 
     }
     public void clear(){
 
@@ -99,11 +103,6 @@ public class PersonHandler : MonoBehaviour
 
     public void respond(Symbols input){
         Symbols temp = Symbols.ex; 
-
-        //character leaves if affection is too low
-        if (character.affection < 0){
-            character.leaves = true;
-        }
 
         //deactivates character
         if (character.leaves){
@@ -188,13 +187,13 @@ public class PersonHandler : MonoBehaviour
         this.GetComponent<SpriteRenderer>().flipX = false;
         if (mov == State.personLeave){
             this.GetComponent<SpriteRenderer>().flipX = true;
-            this.GetComponent<SpriteRenderer>().sprite = character.spriteSheet[1];
+            this.GetComponent<SpriteRenderer>().sprite = Resources.Load<GameObject>(character.spriteSheet[1]).GetComponent<SpriteRenderer>().sprite;
         }
         else if (mov == State.personEnter){
-            this.GetComponent<SpriteRenderer>().sprite = character.spriteSheet[1];
+            this.GetComponent<SpriteRenderer>().sprite = Resources.Load<GameObject>(character.spriteSheet[1]).GetComponent<SpriteRenderer>().sprite;
         }
         else{
-            this.GetComponent<SpriteRenderer>().sprite = character.spriteSheet[0];
+            this.GetComponent<SpriteRenderer>().sprite = Resources.Load<GameObject>(character.spriteSheet[0]).GetComponent<SpriteRenderer>().sprite;
         }
     }
 
@@ -213,4 +212,9 @@ public class PersonHandler : MonoBehaviour
     public string pullName(){
         return character.name;
     }
+
+    public void setFixedPos(Vector3 insert){
+        fixedPos = insert;
+    }
+
 }
