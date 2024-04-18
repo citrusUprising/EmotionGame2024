@@ -109,6 +109,7 @@ public class ManageState : MonoBehaviour
                     if(!startedTalk){
                         game = State.talking;
                         character.GetComponent<PersonHandler>().enable();
+                        onSwitch = true;
                     }
                     handleInput();
                 }
