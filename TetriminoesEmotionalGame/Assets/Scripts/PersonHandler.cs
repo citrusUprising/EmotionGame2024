@@ -134,7 +134,7 @@ public class PersonHandler : MonoBehaviour
 
         //checks for special cases and responds
         for (int i = 0; i < character.cases.Length; i++){
-            if (input == character.cases[i].input &&){
+            if (input == character.cases[i].input && chatCount >= character.cases[i].trigger){
                 speak(character.cases[i].output);
                 character.affection += character.cases[i].affect;
                 return;
