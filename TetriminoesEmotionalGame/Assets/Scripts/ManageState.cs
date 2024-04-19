@@ -215,6 +215,7 @@ public class ManageState : MonoBehaviour
             case State.end: //closing cinematic-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
                     onSwitch = false;
+                    timer = 0;
                     //StartCoroutine(lerp(player,endPointPlayer,endPointFinal,endTime, true));
                     Debug.Log("You've arrived at your station");
                     StartCoroutine(fadeEnds(false));
@@ -222,6 +223,7 @@ public class ManageState : MonoBehaviour
                 timer += Time.deltaTime;
                 if(timer >= endTime){
                     Application.Quit();
+                    Debug.Log("application quit");
                 }
             break;
 

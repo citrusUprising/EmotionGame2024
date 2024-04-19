@@ -727,7 +727,6 @@ MonoBehaviour:
   player: {fileID: 2132778391}
   character: {fileID: 520255027}
   thoughts: {fileID: 1682545283}
-  bubbles: {fileID: 1253548513}
   npcSpeech: {fileID: 1449219611}
   pA: {fileID: 1959731318}
   background: {fileID: 1717859093}
@@ -1325,7 +1324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2789141191469258730, guid: 2221563a64a77b44abe1a5031201bd51, type: 3}
       propertyPath: isDrifting
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2789141191469258730, guid: 2221563a64a77b44abe1a5031201bd51, type: 3}
       propertyPath: maxDistance
