@@ -1,4 +1,4 @@
-<REAPER_PROJECT 0.1 "6.11/x64" 1713503913
+<REAPER_PROJECT 0.1 "6.11/x64" 1713503726
   RIPPLE 0
   GROUPOVERRIDE 0 0 0
   AUTOXFADE 1
@@ -14,7 +14,7 @@
   TIMEMODE 1 5 -1 30 0 0 -1
   VIDEO_CONFIG 0 0 256
   PANMODE 3
-  CURSOR 0.59886621315193
+  CURSOR 0
   ZOOM 1045.8238528326381 0 0
   VZOOMEX 6 0
   USE_REC_CFG 0
@@ -27,7 +27,7 @@
   >
   <APPLYFX_CFG
   >
-  RENDER_FILE "C:\Users\reinh\Desktop\masters\GAME 270\EmotionGame2024\TetriminoesEmotionalGame\Assets\Audio\chord.wav"
+  RENDER_FILE "C:\Users\reinh\Desktop\masters\GAME 270\EmotionGame2024\TetriminoesEmotionalGame\Assets\Audio\npc blip.wav"
   RENDER_FMT 0 2 32000
   RENDER_1X 0
   RENDER_RANGE 1 0 0 18 1000
@@ -55,8 +55,8 @@
   GLOBAL_AUTO -1
   TEMPO 120 4 4
   PLAYRATE 1 0 0.25 4
-  SELECTION 0 1
-  SELECTION2 0 1
+  SELECTION 0 0.5
+  SELECTION2 0 0.5
   MASTERAUTOMODE 0
   MASTERTRACKHEIGHT 0 0
   MASTERPEAKCOL 16576
@@ -91,14 +91,14 @@
     BEAT -1
     AUTOMODE 0
     VOLPAN 0.34046396163343 0 -1 -1 1
-    MUTESOLO 0 0 0
+    MUTESOLO 0 2 0
     IPHASE 0
     PLAYOFFS 0 1
     ISBUS 0 0
     BUSCOMP 0 0 0 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
     FREEMODE 0
-    SEL 0
+    SEL 1
     REC 0 0 1 0 0 0 0
     VU 2
     TRACKHEIGHT 0 0 0
@@ -1992,7 +1992,7 @@
       FADEIN 1 0 0 1 0 0
       FADEOUT 1 0 0 1 0 0
       MUTE 0
-      SEL 0
+      SEL 1
       IGUID {7A7AD681-ADF3-4385-93F7-211E26A9CB48}
       IID 1
       NAME "untitled MIDI item"
@@ -2034,7 +2034,7 @@
     BEAT -1
     AUTOMODE 0
     VOLPAN 1.05316005474485 0 -1 -1 1
-    MUTESOLO 0 0 0
+    MUTESOLO 0 2 0
     IPHASE 0
     PLAYOFFS 0 1
     ISBUS 0 0
@@ -5991,14 +5991,14 @@
     BEAT -1
     AUTOMODE 0
     VOLPAN 1.81557683186099 0 -1 -1 1
-    MUTESOLO 0 2 0
+    MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
     ISBUS 0 0
     BUSCOMP 0 0 0 0 0
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 0 0
     FREEMODE 0
-    SEL 1
+    SEL 0
     REC 0 0 1 0 0 0 0
     VU 2
     TRACKHEIGHT 0 0 0
@@ -9912,7 +9912,7 @@
       FADEIN 1 0 0 1 0 0
       FADEOUT 1 0 0 1 0 0
       MUTE 0
-      SEL 1
+      SEL 0
       IGUID {9E7B78C3-8CB7-443E-8DDF-FFAB72EDD78C}
       IID 1
       NAME "untitled MIDI item"
@@ -9925,8 +9925,8 @@
         HASDATA 1 960 QN
         CCINTERP 32
         POOLEDEVTS {282FE2F6-F6AF-472F-B1DA-31DD6701946D}
-        E 720 90 18 7f
-        E 240 80 18 00
+        e 720 90 18 7f
+        e 240 80 18 00
         E 2880 b0 7b 00
         CCINTERP 32
         CHASE_CC_TAKEOFFS 1
@@ -9948,7 +9948,7 @@
     BEAT -1
     AUTOMODE 0
     VOLPAN 0.74090328658841 0 -1 -1 1
-    MUTESOLO 0 2 0
+    MUTESOLO 0 0 0
     IPHASE 0
     PLAYOFFS 0 1
     ISBUS 0 0
@@ -13094,9 +13094,11 @@
         E 240 90 41 5f
         E 240 80 40 00
         E 0 80 41 00
-        e 0 90 3a 5f
-        e 720 80 3a 00
-        E 2640 b0 7b 00
+        E 0 90 3f 5f
+        E 0 90 3c 5f
+        E 240 80 3f 00
+        E 0 80 3c 00
+        E 3120 b0 7b 00
         CCINTERP 32
         CHASE_CC_TAKEOFFS 1
         GUID {840ECAB3-D327-422D-B8A3-4ECB437A150B}

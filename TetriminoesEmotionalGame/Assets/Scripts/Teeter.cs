@@ -11,6 +11,8 @@ public class Teeter : MonoBehaviour
     float teeterDirection = 1.0f;
 
     RectTransform rect;
+    float maxDelay = 0.25f;
+    bool hasGoneOnce = false;
 
 
     // Start is called before the first frame update
@@ -34,6 +36,13 @@ public class Teeter : MonoBehaviour
         float newRotation = rect.eulerAngles.z + (teeterRange/2.0f) * teeterDirection;
         float r = 0.0f;
         float time = 0.0f;
+
+        if (!hasGoneOnce)
+        {
+            yield return new WaitForSeconds(Random.Range(0.0f, maxDelay));
+            hasGoneOnce = true;
+        }
+
 
         while (time < teeterDuration)
         {
