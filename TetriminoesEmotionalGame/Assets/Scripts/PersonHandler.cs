@@ -24,6 +24,9 @@ public class Person{
     public Symbols[] standard;
     public Symbols[] opening;
     public int timeOut;
+    public int xOffset = 0;
+    public int yOffset = 0;
+    public int charScale = 11;
 }
 
 [System.Serializable]
@@ -74,15 +77,21 @@ public class PersonHandler : MonoBehaviour
         if (!character.leaves && convoDelay < delayMax){
             convoDelay += Time.deltaTime;
         }
-        if(character.name == "Creep"&&character.proximity > closestProximity&&character.isActive){
-            character.proximity -= Time.deltaTime;
+        if(character.name == "Creep"){
+            if(character.proximity > closestProximity&&character.isActive){
+                character.proximity -= Time.deltaTime*2;
+            }
+            else if(character.proximity < 50&&!character.isActive){
+                character.proximity += Time.deltaTime*2;
+            }   
+            
         }
         if (character.affection < 0){
             character.leaves = true;
         }
-        if(character.isActive){
-            this.GetComponent<Transform>().localPosition = new Vector3 (fixedPos.x + (50-character.proximity), fixedPos.y, fixedPos.z);
-        } 
+        if (character.isActive){
+            setProximity();
+        }
     }
     public void clear(){
 
@@ -91,6 +100,7 @@ public class PersonHandler : MonoBehaviour
     public void importJSON(int i){
         character = manifestData.people[i];
         openingLength = character.opening.Length;
+        this.GetComponent<Transform>().localScale = new Vector3 (character.charScale,character.charScale,1);
         openSpot = 0;
         chatCount = 0;
     }
@@ -171,7 +181,9 @@ public class PersonHandler : MonoBehaviour
 
         //general response
         else {
-            speak(character.standard[Random.Range(0,character.standard.Length)]);
+            if(character.standard.Length > 0){
+                speak(character.standard[Random.Range(0,character.standard.Length)]);
+            }
             character.affection += genAffectMod;
         }
 
@@ -209,12 +221,20 @@ public class PersonHandler : MonoBehaviour
         return character.isActive;
     }
 
+    public float pullProximity(){
+        return character.proximity;
+    }
+
     public string pullName(){
         return character.name;
     }
 
     public void setFixedPos(Vector3 insert){
         fixedPos = insert;
+    }
+
+    public void setProximity(){
+        this.GetComponent<Transform>().localPosition = new Vector3 (fixedPos.x + (5.0f-character.proximity/5.0f)+character.xOffset, fixedPos.y+character.yOffset, fixedPos.z);
     }
 
 }

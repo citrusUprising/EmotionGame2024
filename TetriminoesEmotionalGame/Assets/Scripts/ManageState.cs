@@ -10,12 +10,11 @@ public class ManageState : MonoBehaviour
     public GameObject player;
     public GameObject character;
     public ThoughtBubble thoughts;
-    public Canvas bubbles;
     public GameObject npcSpeech;
     public AudioSource pA;
     public SpriteRenderer background;
     public Image blackScreen;
-    private int currentChar = 0;
+    [SerializeField] private int currentChar = 0;
     private State game;
     private bool onSwitch = true;
     private Vector3 camOut;
@@ -32,10 +31,10 @@ public class ManageState : MonoBehaviour
     //private Vector3 endPointPlayer;
     private Vector3 endPointFinal;
     //section time limits
-    private float startTime = 5;
+    private float startTime = 2;
     private float enterTime = 5;
     private float leaveTime = 5;
-    private float endTime = 5;
+    private float endTime = 2;
 
     //sounds
     public AudioClip entering;
@@ -58,14 +57,13 @@ public class ManageState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startPoint = new Vector3(-1300.0f,-587.0f,1.0f);//FLAG change as appropriate
-        endPointChar = new Vector3(-970.0f,-587.0f,1.0f);
+        startPoint = new Vector3(-400.0f,70.0f,1.0f);//FLAG change as appropriate
+        endPointChar = new Vector3(-97.0f,70.0f,1.0f);
         //endPointPlayer = new Vector3(-951.0f,-583.0f,1.0f);
-        endPointFinal = new Vector3(100.0f,-587.0f,1.0f);
+        endPointFinal = new Vector3(200.0f,70.0f,1.0f);
         character.GetComponent<Transform>().localPosition = startPoint;
         //player.GetComponent<Transform>().localPosition = endPointPlayer;
         game = State.start;
-        bubbles.enabled = false;
         character.GetComponent<PersonHandler>().setFixedPos(endPointChar);
         stations = new AudioClip[7];
         stations[0]= Turnstyle;
@@ -87,7 +85,8 @@ public class ManageState : MonoBehaviour
             case State.start: //Opening cinematic---------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
                     onSwitch = false;
-                    //StartCoroutine(lerp(player,startPoint,endPointPlayer,startTime, false));
+                    npcSpeech.SetActive(false);
+                    StartCoroutine(fadeEnds(true));
                 }
                 timer += Time.deltaTime;
                 if(timer >= startTime){
@@ -105,7 +104,7 @@ public class ManageState : MonoBehaviour
                     startedTalk = false;
                     character.GetComponent<PersonHandler>().pickFrame(game);
                     //moves new character
-                    StartCoroutine(lerp(character,startPoint,endPointChar,enterTime, false));
+                    StartCoroutine(lerp(startPoint,endPointChar,enterTime, false));
                     playOutro();
                     Debug.Log("Someone is coming");
                 }
@@ -125,10 +124,10 @@ public class ManageState : MonoBehaviour
                     onSwitch = false;
                     character.GetComponent<PersonHandler>().pickFrame(game);
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" sat next to you");
-                    bubbles.enabled = true;
                     savedSymbol = Symbols.empty;
                 }
                 timer += Time.deltaTime;
+                character.GetComponent<PersonHandler>().setProximity();
 
                 //safety catch  prevents players from waiting TOO long
                 if(startedTalk){
@@ -158,6 +157,7 @@ public class ManageState : MonoBehaviour
                     onSwitch = false;
                     npcSpeech.SetActive(true);
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" started talking");
+                    character.GetComponent<PersonHandler>().pickFrame(game);
                  }
                  timer += Time.deltaTime;
 
@@ -191,7 +191,7 @@ public class ManageState : MonoBehaviour
                     character.GetComponent<PersonHandler>().pickFrame(game);
                     StartCoroutine(playIntro(currentChar));
                     currentChar++;
-                    StartCoroutine(lerp(character,character.GetComponent<Transform>().localPosition,endPointFinal,leaveTime, true));
+                    StartCoroutine(lerp(character.GetComponent<Transform>().localPosition,endPointFinal,leaveTime, true));
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" is leaving");
                     if(currentChar >=3 && currentChar <=5){
                         StartCoroutine(fade(currentChar%2));
@@ -217,7 +217,7 @@ public class ManageState : MonoBehaviour
                     onSwitch = false;
                     //StartCoroutine(lerp(player,endPointPlayer,endPointFinal,endTime, true));
                     Debug.Log("You've arrived at your station");
-                    bubbles.enabled = false;
+                    StartCoroutine(fadeEnds(false));
                 }
                 timer += Time.deltaTime;
                 if(timer >= endTime){
@@ -270,7 +270,7 @@ public class ManageState : MonoBehaviour
         }
     }
 
-    IEnumerator lerp(GameObject agent, Vector3 start, Vector3 end, float duration, bool easeIn)
+    IEnumerator lerp(Vector3 start, Vector3 end, float duration, bool easeIn)
     {
         float time = 0.0f;
         Vector3 d = start;
@@ -288,15 +288,15 @@ public class ManageState : MonoBehaviour
                 t = Mathf.Sin((t * Mathf.PI) / 2);
             }
 
-            d = Vector3.Lerp(start, end, t);
+            d = Vector3.Lerp(start, new Vector3 (end.x + (5-character.GetComponent<PersonHandler>().pullProximity()/5),end.y,end.z), t);
 
-            agent.GetComponent<Transform>().localPosition = d;
+            character.GetComponent<Transform>().localPosition = d;
 
             time += Time.deltaTime;
 
             yield return null;
         }
-        agent.GetComponent<Transform>().localPosition = d;
+        character.GetComponent<Transform>().localPosition = d;
     }
 
     IEnumerator playIntro(int station){
@@ -315,7 +315,7 @@ public class ManageState : MonoBehaviour
     }
 
     IEnumerator fade(int bg){
-        yield return new WaitForSeconds(leaveTime/2);
+        yield return new WaitForSeconds(leaveTime/3);
         float time = 0.0f;
         Color start = blackScreen.color;
         while(time<leaveTime/3){
@@ -332,10 +332,34 @@ public class ManageState : MonoBehaviour
         while (time<leaveTime){
             time += Time.deltaTime;
             blackScreen.color = start;
-            start.a = (leaveTime-3*time)/leaveTime;
+            start.a = 3*(leaveTime-time)/leaveTime;
             yield return null;
         }
         start.a = 0;
         blackScreen.color = start;
+    }
+
+    IEnumerator fadeEnds(bool intro){
+        Color start = blackScreen.color;
+        if (intro){
+            yield return new WaitForSeconds(startTime/2);
+            float time = 0.0f;
+            while(time<startTime/2){
+                time += Time.deltaTime;
+                blackScreen.color = start;
+                start.a = (startTime-2*time)/startTime;
+                yield return null;
+            }
+        }
+        else{
+            yield return new WaitForSeconds(endTime/2);
+            float time = 0.0f;
+            while(time<endTime/2){
+                time += Time.deltaTime;
+                blackScreen.color = start;
+                start.a = 2*time/endTime;
+                yield return null;
+            }
+        }
     }
 }

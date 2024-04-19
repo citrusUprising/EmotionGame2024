@@ -30,9 +30,9 @@
         {
             "name":"overheard",
             "affection": 0,
-            "spriteSheet":["overheard0","overheard1","overheard2"],
+            "spriteSheet":["overheard0","overheard0","overheard2"],
             "waits": false,
-            "proximity": 10,
+            "proximity": 20,
             "cases":[
                 {
                     "input": 5,
@@ -57,14 +57,15 @@
             ],
             "standard": [3,2,2,2,2,4,4,4,4,4,3,3,6,6,6,8,12],
             "opening": [8],
-            "timeOut": 120
+            "timeOut": 90,
+            "charScale":10
         },
         {
             "name":"pair",
             "affection": 60,
             "spriteSheet":["pair0","pair1","pair2"],
             "waits": true,
-            "proximity": 50,
+            "proximity": 190,
             "cases":[
                 {
                     "input": 2,
@@ -80,7 +81,9 @@
             ],
             "standard": [2,3],
             "opening": [3],
-            "timeOut": 60
+            "timeOut": 60,
+            "yOffset": 11,
+            "charScale": 9
         },
         {
             "name":"pregnant",
@@ -120,7 +123,7 @@
             "affection": 60,
             "spriteSheet":["headphone0","headphone1","headphone2"],
             "waits": true,
-            "proximity": 50,
+            "proximity": 40,
             "cases":[
                 {
                     "input": 2,
@@ -183,14 +186,16 @@
                     "trigger": 3
                 }
             ],
-            "standard": [],
+            "standard": [1],
             "opening": [],
-            "timeOut": 45
+            "timeOut": 55,
+            "yOffset": 5,
+            "charScale": 9
         },
         {
             "name":"drunk",
             "affection": 100,
-            "spriteSheet":["drunk0","drunk1","drunk2"],
+            "spriteSheet":["drunk0","drunk0","drunk2"],
             "waits": true,
             "proximity": 10,
             "cases":[
@@ -206,7 +211,7 @@
         {
             "name":"getpass",
             "affection": 60,
-            "spriteSheet":["getpass0","getpass1","getpass2"],
+            "spriteSheet":["getPass0","getPass1","getPass2"],
             "waits": true,
             "proximity": 50,
             "cases":[
@@ -219,7 +224,8 @@
             ],
             "standard": [2,3],
             "opening": [2],
-            "timeOut": 30
+            "timeOut": 30,
+            "charScale": 9
         }
     ]
 }
