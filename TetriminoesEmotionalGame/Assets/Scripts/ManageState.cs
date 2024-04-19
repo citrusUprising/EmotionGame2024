@@ -29,7 +29,7 @@ public class ManageState : MonoBehaviour
 
     private Vector3 startPoint;
     private Vector3 endPointChar;
-    private Vector3 endPointPlayer;
+    //private Vector3 endPointPlayer;
     private Vector3 endPointFinal;
     //section time limits
     private float startTime = 5;
@@ -49,17 +49,21 @@ public class ManageState : MonoBehaviour
     public AudioClip Leisure;
     public AudioClip Terminal;
     private AudioClip[] stations;
+    //backgrounds
+    public Sprite[] backgrounds;
+    public Sprite backgroundTwo;
+    public Sprite backgroundOne;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        startPoint = new Vector3(-1300.0f,-583.0f,1.0f);//FLAG change as appropriate
-        endPointChar = new Vector3(-1015.0f,-583.0f,1.0f);
-        endPointPlayer = new Vector3(-951.0f,-583.0f,1.0f);
-        endPointFinal = new Vector3(100.0f,-583.0f,1.0f);
+        startPoint = new Vector3(-1300.0f,-587.0f,1.0f);//FLAG change as appropriate
+        endPointChar = new Vector3(-970.0f,-587.0f,1.0f);
+        //endPointPlayer = new Vector3(-951.0f,-583.0f,1.0f);
+        endPointFinal = new Vector3(100.0f,-587.0f,1.0f);
         character.GetComponent<Transform>().localPosition = startPoint;
-        player.GetComponent<Transform>().localPosition = endPointPlayer;
+        //player.GetComponent<Transform>().localPosition = endPointPlayer;
         game = State.start;
         bubbles.enabled = false;
         character.GetComponent<PersonHandler>().setFixedPos(endPointChar);
@@ -71,6 +75,9 @@ public class ManageState : MonoBehaviour
         stations[4]= Winston;
         stations[5]= Leisure;
         stations[6]= Terminal;
+        backgrounds = new Sprite[2];
+        backgrounds[0] = backgroundTwo;
+        backgrounds[1] = backgroundOne;
     }
 
     // Update is called once per frame
@@ -186,6 +193,9 @@ public class ManageState : MonoBehaviour
                     currentChar++;
                     StartCoroutine(lerp(character,character.GetComponent<Transform>().localPosition,endPointFinal,leaveTime, true));
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" is leaving");
+                    if(currentChar >=3 && currentChar <=5){
+                        StartCoroutine(fade(currentChar%2));
+                    }
                 }
                 timer += Time.deltaTime;
 
@@ -304,23 +314,25 @@ public class ManageState : MonoBehaviour
         pA.Play();   
     }
 
-    IEnumerator fade(int background){
+    IEnumerator fade(int bg){
+        yield return new WaitForSeconds(leaveTime/2);
         float time = 0.0f;
         Color start = blackScreen.color;
-        while(time<endTime/3){
+        while(time<leaveTime/3){
             time += Time.deltaTime;
             blackScreen.color = start;
-            start.a = 3*time/endTime;
+            start.a = 3*time/leaveTime;
             yield return null;
         }
         start.a = 1;
         blackScreen.color = start;
-        yield return new WaitForSeconds(endTime/3);
-        time = endTime*2/3;
-        while (time<endTime){
+        yield return new WaitForSeconds(leaveTime/3);
+        background.sprite = backgrounds[bg];
+        time = leaveTime*2/3;
+        while (time<leaveTime){
             time += Time.deltaTime;
             blackScreen.color = start;
-            start.a = (endTime-3*time)/endTime;
+            start.a = (leaveTime-3*time)/leaveTime;
             yield return null;
         }
         start.a = 0;

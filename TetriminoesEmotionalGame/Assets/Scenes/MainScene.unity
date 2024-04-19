@@ -742,6 +742,9 @@ MonoBehaviour:
   Winston: {fileID: 8300000, guid: ac27c3121e0f25b4fb489ca5d9b01885, type: 3}
   Leisure: {fileID: 8300000, guid: 2b847d1b48f676a43a57e7c1b7ef5848, type: 3}
   Terminal: {fileID: 8300000, guid: ba46df56b3d790640942285f4e2269f8, type: 3}
+  backgrounds: []
+  backgroundTwo: {fileID: 21300000, guid: 009f464cf8a3c464888f51814621f369, type: 3}
+  backgroundOne: {fileID: 21300000, guid: c571c243fdda160428abb43bddecfecf, type: 3}
 --- !u!1 &1253548510
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,7 +1056,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: c571c243fdda160428abb43bddecfecf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 009f464cf8a3c464888f51814621f369, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
