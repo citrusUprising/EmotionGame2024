@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ManageState : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class ManageState : MonoBehaviour
     public Canvas bubbles;
     public GameObject npcSpeech;
     public AudioSource pA;
+    public SpriteRenderer background;
+    public Image blackScreen;
     private int currentChar = 0;
     private State game;
     private bool onSwitch = true;
@@ -56,7 +59,7 @@ public class ManageState : MonoBehaviour
         endPointPlayer = new Vector3(-951.0f,-583.0f,1.0f);
         endPointFinal = new Vector3(100.0f,-583.0f,1.0f);
         character.GetComponent<Transform>().localPosition = startPoint;
-        player.GetComponent<Transform>().localPosition = startPoint;
+        player.GetComponent<Transform>().localPosition = endPointPlayer;
         game = State.start;
         bubbles.enabled = false;
         character.GetComponent<PersonHandler>().setFixedPos(endPointChar);
@@ -77,7 +80,7 @@ public class ManageState : MonoBehaviour
             case State.start: //Opening cinematic---------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
                     onSwitch = false;
-                    StartCoroutine(lerp(player,startPoint,endPointPlayer,startTime, false));
+                    //StartCoroutine(lerp(player,startPoint,endPointPlayer,startTime, false));
                 }
                 timer += Time.deltaTime;
                 if(timer >= startTime){
@@ -96,6 +99,7 @@ public class ManageState : MonoBehaviour
                     character.GetComponent<PersonHandler>().pickFrame(game);
                     //moves new character
                     StartCoroutine(lerp(character,startPoint,endPointChar,enterTime, false));
+                    playOutro();
                     Debug.Log("Someone is coming");
                 }
                 timer += Time.deltaTime;
@@ -201,7 +205,7 @@ public class ManageState : MonoBehaviour
             case State.end: //closing cinematic-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
                     onSwitch = false;
-                    StartCoroutine(lerp(player,endPointPlayer,endPointFinal,endTime, true));
+                    //StartCoroutine(lerp(player,endPointPlayer,endPointFinal,endTime, true));
                     Debug.Log("You've arrived at your station");
                     bubbles.enabled = false;
                 }
@@ -298,5 +302,28 @@ public class ManageState : MonoBehaviour
     {
         pA.clip = clip;
         pA.Play();   
+    }
+
+    IEnumerator fade(int background){
+        float time = 0.0f;
+        Color start = blackScreen.color;
+        while(time<endTime/3){
+            time += Time.deltaTime;
+            blackScreen.color = start;
+            start.a = 3*time/endTime;
+            yield return null;
+        }
+        start.a = 1;
+        blackScreen.color = start;
+        yield return new WaitForSeconds(endTime/3);
+        time = endTime*2/3;
+        while (time<endTime){
+            time += Time.deltaTime;
+            blackScreen.color = start;
+            start.a = (endTime-3*time)/endTime;
+            yield return null;
+        }
+        start.a = 0;
+        blackScreen.color = start;
     }
 }
