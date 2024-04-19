@@ -11,6 +11,7 @@ public class ManageState : MonoBehaviour
     public ThoughtBubble thoughts;
     public Canvas bubbles;
     public GameObject npcSpeech;
+    public AudioSource pA;
     private int currentChar = 0;
     private State game;
     private bool onSwitch = true;
@@ -26,24 +27,47 @@ public class ManageState : MonoBehaviour
     private Vector3 startPoint;
     private Vector3 endPointChar;
     private Vector3 endPointPlayer;
+    private Vector3 endPointFinal;
     //section time limits
     private float startTime = 5;
     private float enterTime = 5;
     private float leaveTime = 5;
     private float endTime = 5;
 
+    //sounds
+    public AudioClip entering;
+    public AudioClip leaving;
+    //station names
+    public AudioClip Turnstyle;
+    public AudioClip Mission;
+    public AudioClip Odyssey;
+    public AudioClip Crossroads;
+    public AudioClip Winston;
+    public AudioClip Leisure;
+    public AudioClip Terminal;
+    private AudioClip[] stations;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        startPoint = new Vector3(-1300.0f,-570.0f,1.0f);//FLAG change as appropriate
-        endPointChar = new Vector3(-1030.0f,-570.0f,1.0f);
-        endPointPlayer = new Vector3(-910.0f,-570.0f,1.0f);
+        startPoint = new Vector3(-1300.0f,-583.0f,1.0f);//FLAG change as appropriate
+        endPointChar = new Vector3(-1015.0f,-583.0f,1.0f);
+        endPointPlayer = new Vector3(-951.0f,-583.0f,1.0f);
+        endPointFinal = new Vector3(100.0f,-583.0f,1.0f);
         character.GetComponent<Transform>().localPosition = startPoint;
         player.GetComponent<Transform>().localPosition = startPoint;
         game = State.start;
         bubbles.enabled = false;
         character.GetComponent<PersonHandler>().setFixedPos(endPointChar);
+        stations = new AudioClip[7];
+        stations[0]= Turnstyle;
+        stations[1]= Mission;
+        stations[2]= Odyssey;
+        stations[3]= Crossroads;
+        stations[4]= Winston;
+        stations[5]= Leisure;
+        stations[6]= Terminal;
     }
 
     // Update is called once per frame
@@ -154,8 +178,9 @@ public class ManageState : MonoBehaviour
                     onSwitch = false;
                     savedSymbol = Symbols.empty;
                     character.GetComponent<PersonHandler>().pickFrame(game);
+                    StartCoroutine(playIntro(currentChar));
                     currentChar++;
-                    StartCoroutine(lerp(character,character.GetComponent<Transform>().localPosition,startPoint,leaveTime, true));
+                    StartCoroutine(lerp(character,character.GetComponent<Transform>().localPosition,endPointFinal,leaveTime, true));
                     Debug.Log(character.GetComponent<PersonHandler>().pullName()+" is leaving");
                 }
                 timer += Time.deltaTime;
@@ -176,7 +201,7 @@ public class ManageState : MonoBehaviour
             case State.end: //closing cinematic-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
                 if(onSwitch){
                     onSwitch = false;
-                    StartCoroutine(lerp(player,endPointPlayer,startPoint,endTime, true));
+                    StartCoroutine(lerp(player,endPointPlayer,endPointFinal,endTime, true));
                     Debug.Log("You've arrived at your station");
                     bubbles.enabled = false;
                 }
@@ -194,7 +219,7 @@ public class ManageState : MonoBehaviour
     IEnumerator responseDelay(){
         responding = true;
         yield return new WaitForSeconds(character.GetComponent<PersonHandler>().delayMax);
-        character.GetComponent<PersonHandler>().respond(savedSymbol);
+        character.GetComponent<PersonHandler>().respond(savedSymbol,timer);
         savedSymbol = Symbols.empty;
         responding = false;
     }
@@ -240,11 +265,13 @@ public class ManageState : MonoBehaviour
         {
             float t = time / duration;
 
-            t = -(Mathf.Cos(Mathf.PI * t) - 1) / 2; //swap to to either ease in or out depending on bool //FLAG
+            //t = -(Mathf.Cos(Mathf.PI * t) - 1) / 2; //swap to to either ease in or out depending on bool //FLAG
             if(easeIn){
                 //ease in
+                t = 1 - Mathf.Cos((t * Mathf.PI) / 2);
             }else{
                 //ease out
+                t = Mathf.Sin((t * Mathf.PI) / 2);
             }
 
             d = Vector3.Lerp(start, end, t);
@@ -256,5 +283,20 @@ public class ManageState : MonoBehaviour
             yield return null;
         }
         agent.GetComponent<Transform>().localPosition = d;
+    }
+
+    IEnumerator playIntro(int station){
+        playSound(entering);
+        yield return new WaitForSeconds(entering.length);
+        playSound(stations[station]);
+    }
+    private void playOutro(){
+        playSound(leaving);
+    }
+
+    private void playSound(AudioClip clip)
+    {
+        pA.clip = clip;
+        pA.Play();   
     }
 }

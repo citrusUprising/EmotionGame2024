@@ -3,7 +3,7 @@
         {
             "name":"Creep",
             "affection": 60,
-            "spriteSheet":["example1","example2"],
+            "spriteSheet":["creep0","creep0","creep2"],
             "waits": false,
             "proximity": 50,
             "cases":[
@@ -30,7 +30,7 @@
         {
             "name":"overheard",
             "affection": 0,
-            "spriteSheet":["example1","example2"],
+            "spriteSheet":["overheard0","overheard1","overheard2"],
             "waits": false,
             "proximity": 50,
             "cases":[
@@ -45,7 +45,7 @@
         {
             "name":"pair",
             "affection": 60,
-            "spriteSheet":["example1","example2"],
+            "spriteSheet":["pair0","pair1","pair2"],
             "waits": true,
             "proximity": 50,
             "cases":[
@@ -77,7 +77,7 @@
         {
             "name":"pregnant",
             "affection": 60,
-            "spriteSheet":["example1","example2"],
+            "spriteSheet":["pregnant0","pregnant1","pregnant2"],
             "waits": true,
             "proximity": 50,
             "cases":[
@@ -109,7 +109,7 @@
         {
             "name":"headphone",
             "affection": 3,
-            "spriteSheet":["example1","example2"],
+            "spriteSheet":["headphone0","headphone1","headphone2"],
             "waits": true,
             "proximity": 50,
             "cases":[
@@ -126,7 +126,7 @@
         {
             "name":"headphoneoff",
             "affection": 3,
-            "spriteSheet":["example1","example2"],
+            "spriteSheet":["headphone0","headphone1","headphone2"],
             "waits": false,
             "proximity": 50,
             "cases":[
@@ -141,7 +141,7 @@
         {
             "name":"drunk",
             "affection": 100,
-            "spriteSheet":["example1","example2"],
+            "spriteSheet":["drunk0","drunk1","drunk2"],
             "waits": true,
             "proximity": 50,
             "cases":[
@@ -168,7 +168,7 @@
         {
             "name":"getpass",
             "affection": 60,
-            "spriteSheet":["example1","example2"],
+            "spriteSheet":["getpass0","getpass1","getpass2"],
             "waits": true,
             "proximity": 50,
             "cases":[

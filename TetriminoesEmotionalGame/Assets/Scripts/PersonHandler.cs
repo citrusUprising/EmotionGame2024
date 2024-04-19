@@ -46,7 +46,6 @@ public class PersonHandler : MonoBehaviour
     private int openingLength;
     public float convoDelay = 0;
     public float delayMax = 1;
-    private float trainTime = 0;
     private int chatCount = 0;
 
     private int closestProximity = 10;
@@ -72,7 +71,6 @@ public class PersonHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        trainTime += Time.deltaTime;
         if (!character.leaves && convoDelay < delayMax){
             convoDelay += Time.deltaTime;
         }
@@ -104,7 +102,7 @@ public class PersonHandler : MonoBehaviour
         character.affection -= genAffectMod*2;
     }
 
-    public void respond(Symbols input){
+    public void respond(Symbols input, float trainTime){
         Symbols temp = Symbols.ex; 
 
         //deactivates character
@@ -188,16 +186,14 @@ public class PersonHandler : MonoBehaviour
     }
 
     public void pickFrame (State mov){
-        this.GetComponent<SpriteRenderer>().flipX = false;
-        if (mov == State.personLeave){
-            this.GetComponent<SpriteRenderer>().flipX = true;
+        if (mov == State.sitting){
             this.GetComponent<SpriteRenderer>().sprite = Resources.Load<GameObject>(character.spriteSheet[1]).GetComponent<SpriteRenderer>().sprite;
         }
-        else if (mov == State.personEnter){
-            this.GetComponent<SpriteRenderer>().sprite = Resources.Load<GameObject>(character.spriteSheet[1]).GetComponent<SpriteRenderer>().sprite;
-        }
-        else{
+        else if(mov == State.talking){
             this.GetComponent<SpriteRenderer>().sprite = Resources.Load<GameObject>(character.spriteSheet[0]).GetComponent<SpriteRenderer>().sprite;
+        }
+        else{ 
+            this.GetComponent<SpriteRenderer>().sprite = Resources.Load<GameObject>(character.spriteSheet[2]).GetComponent<SpriteRenderer>().sprite;
         }
     }
 
