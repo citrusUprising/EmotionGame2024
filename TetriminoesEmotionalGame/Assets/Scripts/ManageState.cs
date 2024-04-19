@@ -25,6 +25,7 @@ public class ManageState : MonoBehaviour
     private bool ending = false;
     private bool startedTalk = false;
     private int safetyTime = 15; //amount of seconds after fucking up a conversation before a character change is forced
+    private bool isPause = false;
 
     private Vector3 startPoint;
     private Vector3 endPointChar;
@@ -108,7 +109,10 @@ public class ManageState : MonoBehaviour
                     playOutro();
                     Debug.Log("Someone is coming");
                 }
-                timer += Time.deltaTime;
+                Pausable();
+                if(!isPause){
+                    timer += Time.deltaTime;
+                }
                 
                 //ends entering scene
                 if(timer >= enterTime){
@@ -197,7 +201,10 @@ public class ManageState : MonoBehaviour
                         StartCoroutine(fade(currentChar%2));
                     }
                 }
-                timer += Time.deltaTime;
+                Pausable();
+                if(!isPause){
+                    timer += Time.deltaTime;
+                }
 
                 //move character
 
@@ -294,7 +301,9 @@ public class ManageState : MonoBehaviour
 
             character.GetComponent<Transform>().localPosition = d;
 
-            time += Time.deltaTime;
+            if(!isPause){
+                time += Time.deltaTime;
+            }
 
             yield return null;
         }
@@ -362,6 +371,13 @@ public class ManageState : MonoBehaviour
                 start.a = 2*time/endTime;
                 yield return null;
             }
+        }
+    }
+
+    private void Pausable(){
+        if (Input.GetKeyDown(KeyCode.Backspace)){
+            isPause = !isPause;
+            Debug.Log("pause hit");
         }
     }
 }
