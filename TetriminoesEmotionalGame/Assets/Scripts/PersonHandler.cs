@@ -51,7 +51,7 @@ public class PersonHandler : MonoBehaviour
     public float delayMax = 1;
     private int chatCount = 0;
 
-    private int closestProximity = 10;
+    private int closestProximity = -10;
 
 
     void Awake(){
